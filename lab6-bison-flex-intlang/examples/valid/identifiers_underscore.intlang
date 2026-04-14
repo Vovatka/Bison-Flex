@@ -1,0 +1,4 @@
+int _temp = 5;
+int var1 = 10;
+int my_var_2 = 20;
+result = _temp + var1 + my_var_2; // 35
