@@ -1,5 +1,0 @@
-int counter = 0;
-counter = counter + 1; // 1
-counter = counter + 1; // 2
-counter = counter * 5; // 10
-final = counter - 2;   // 8

@@ -1,5 +1,0 @@
-int a = 5;
-int b = 3;
-result = a * b + 2;
-
-value = a * (b + 2);
