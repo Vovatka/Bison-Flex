@@ -35,14 +35,23 @@ run_test() {
     if [ "$expect_success" -eq 1 ] && [ "$exit_code" -eq 0 ]; then
         echo -e "  ${GREEN}PASS${NC}  $label"
         pass=$((pass + 1))
+        # Показываем полный вывод, если он не пуст
+        if [ -n "$output" ]; then
+            echo "       Output:"
+            echo "$output" | sed 's/^/         /'
+        fi
     elif [ "$expect_success" -eq 0 ] && [ "$exit_code" -ne 0 ]; then
         echo -e "  ${GREEN}PASS${NC}  $label"
         pass=$((pass + 1))
-        echo "       Detals: $(echo "$output" | head -1)"
+        # Показываем все сообщения об ошибках
+        if [ -n "$output" ]; then
+            echo "       Detals:"
+            echo "$output" | sed 's/^/         /'
+        fi
     elif [ "$expect_success" -eq 1 ]; then
         echo -e "  ${RED}FAIL${NC}  $label  ${YELLOW}← ожидался успех (код $exit_code)${NC}"
         echo "       Output:"
-        echo "$output" | head -2 | sed 's/^/         /'
+        echo "$output" | sed 's/^/         /'
         fail=$((fail + 1))
     else
         echo -e "  ${RED}FAIL${NC}  $label  ${YELLOW}← ожидалась ошибка, но код возврата 0${NC}"

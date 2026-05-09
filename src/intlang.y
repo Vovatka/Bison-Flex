@@ -60,7 +60,13 @@ int get_var_value(const char* name) {
 
 program:
     statement_list
-        { printf("Success\n"); }
+        {
+            printf("Success\n");
+            printf("Final variables state:\n");
+            for (int i = 0; i < var_count; i++) {
+                printf("  %s = %d\n", variables[i].name, variables[i].value);
+            }
+        }
 ;
 
 statement_list:
@@ -102,8 +108,8 @@ term:
   | term '/' factor       
         { 
             if ($3 == 0) {
-                yyerror("Деление на ноль");
-                $$ = 0;
+                yyerror("semantic error: Деление на ноль");
+                YYERROR;
             } else {
                 $$ = $1 / $3; 
             }
@@ -125,7 +131,7 @@ factor:
 %%
 
 void yyerror(const char *s) {
-    fprintf(stderr, "Ошибка синтаксиса: %s\n", s);
+    fprintf(stderr, "Ошибка: %s\n", s);
 }
 
 int main(int argc, char *argv[]) {
